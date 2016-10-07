@@ -106,23 +106,26 @@ module PickpointApi::ApiActions
   def get_delivery_cost(options)
     ensure_session_state
 
-    if !options[:invoice_ids].nil? && !options[:sender_invoice_numbers].nil?
-      raise ApiError 'Only :invoice_ids or :sender_invoice_numbers parameter should be specified'
-    end
+    # if !options[:invoice_ids].nil? && !options[:sender_invoice_numbers].nil?
+    #   raise ApiError 'Only :invoice_ids or :sender_invoice_numbers parameter should be specified'
+    # end
 
-    data = if !options[:invoice_ids].nil?
-      options[:invoice_ids].map do |invoice_id|
-        {'InvoiceNumber' => invoice_id}
-      end
-    elsif !options[:sender_invoice_numbers].nil?
-      options[:invoice_ids].map do |invoice_id|
-        {'SenderInvoiceNumber' => invoice_id}
-      end
-    else
-      raise ApiError 'Either :invoice_ids or :sender_invoice_numbers parameter should be specified'
-    end
+    # data = if !options[:invoice_ids].nil?
+    #   options[:invoice_ids].map do |invoice_id|
+    #     {'InvoiceNumber' => invoice_id}
+    #   end
+    # elsif !options[:sender_invoice_numbers].nil?
+    #   options[:invoice_ids].map do |invoice_id|
+    #     {'SenderInvoiceNumber' => invoice_id}
+    #   end
+    # else
+    #   raise ApiError 'Either :invoice_ids or :sender_invoice_numbers parameter should be specified'
+    # end
 
-    data = attach_session_id('Sendings', data)
+    # data = attach_session_id('Sendings', data)
+    options.merge!(
+      'SessionId' => @session_id
+    )
     json_request(:get_delivery_cost, data)
   end
 

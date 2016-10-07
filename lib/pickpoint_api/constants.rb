@@ -49,7 +49,7 @@ module PickpointApi::Constants
     },
     get_delivery_cost:
     {
-      path: '/getdeliverycost',
+      path: '/calctariff',
       method: :post
     },
     courier:
